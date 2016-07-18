@@ -211,4 +211,313 @@ mysql> SELECT * FROM Entry;+----+---------------+-----------+----------+--------
 +----+---------------+-----------+----------+---------------------+------+---------+----------------+----------------+------------------+-----------------+-----------------+
 3 rows in set (0.00 sec)
 
+mysql> SELECT * FROM Entry WHERE id <4 ;
++----+---------------+-----------+----------+---------------------+------+---------+----------------+----------------+------------------+-----------------+-----------------+
+| id | addressBookId | firstName | lastName | birthday            | type | subtype | contentLineOne | contentLineTwo | contentLineThree | contentLineFour | contentLineFive |
++----+---------------+-----------+----------+---------------------+------+---------+----------------+----------------+------------------+-----------------+-----------------+
+|  1 |           234 | shreya    | kaicker  | 1991-06-01 00:00:00 | home | email   | kk             | jj             | kkk              | lll             | kjkj            |
+|  2 |           234 | pranav    | prakash  | 1491-06-01 00:00:00 | work | phone   | mkk            | jrj            | jjkkk            | hhlll           | kjkhhj          |
+|  3 |           234 | ishan     | pakash   | 1791-06-01 00:00:00 | work | phone   | mk             | jj             | jjk              | hlll            | khhj            |
++----+---------------+-----------+----------+---------------------+------+---------+----------------+----------------+------------------+-----------------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM AddressBook WHERE id =1;                                                    
++----+-----------+--------+---------------------+---------------------+
+| id | accountId | name   | createdOn           | modifiedOn          |
++----+-----------+--------+---------------------+---------------------+
+|  1 |       123 | shreya | 2016-07-18 00:00:00 | 2016-07-18 00:00:00 |
++----+-----------+--------+---------------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM Account WHERE id =1;                                                         
++----+-------------+-------------+---------------------+---------------------+
+| id | email       | password    | createdOn           | modifiedOn          |
++----+-------------+-------------+---------------------+---------------------+
+|  1 | shr@ggg.com | achsdsidjis | 2016-07-18 00:00:00 | 2016-07-18 00:00:00 |
++----+-------------+-------------+---------------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE ENTRY SET type="home";
+ERROR 1146 (42S02): Table 'decodemtl_addressbook_import.ENTRY' doesn't exist
+mysql> UPDATE Entry SET type="home";                                                              
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 3  Changed: 2  Warnings: 0
+
+mysql> SELECT * FROM Entry;
++----+---------------+-----------+----------+---------------------+------+---------+----------------+----------------+------------------+-----------------+-----------------+
+| id | addressBookId | firstName | lastName | birthday            | type | subtype | contentLineOne | contentLineTwo | contentLineThree | contentLineFour | contentLineFive |
++----+---------------+-----------+----------+---------------------+------+---------+----------------+----------------+------------------+-----------------+-----------------+
+|  1 |           234 | shreya    | kaicker  | 1991-06-01 00:00:00 | home | email   | kk             | jj             | kkk              | lll             | kjkj            |
+|  2 |           234 | pranav    | prakash  | 1491-06-01 00:00:00 | home | phone   | mkk            | jrj            | jjkkk            | hhlll           | kjkhhj          |
+|  3 |           234 | ishan     | pakash   | 1791-06-01 00:00:00 | home | phone   | mk             | jj             | jjk              | hlll            | khhj            |
++----+---------------+-----------+----------+---------------------+------+---------+----------------+----------------+------------------+-----------------+-----------------+
+3 rows in set (0.01 sec)
+
+mysql> UPDATE AddressBook SET name="poonAm";                                              
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM AddressBook;                                                                 
++----+-----------+--------+---------------------+---------------------+
+| id | accountId | name   | createdOn           | modifiedOn          |
++----+-----------+--------+---------------------+---------------------+
+|  1 |       123 | poonAm | 2016-07-18 00:00:00 | 2016-07-18 00:00:00 |
++----+-----------+--------+---------------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE Account SET password="popponAm";                                                
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Account;
++----+-------------+----------+---------------------+---------------------+
+| id | email       | password | createdOn           | modifiedOn          |
++----+-------------+----------+---------------------+---------------------+
+|  1 | shr@ggg.com | popponAm | 2016-07-18 00:00:00 | 2016-07-18 00:00:00 |
++----+-------------+----------+---------------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> TRUNCATE Entry;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM Entry;
+Empty set (0.00 sec)
+
+mysql> describe Entry;+------------------+---------------------------------+------+-----+---------+----------------+
+| Field            | Type                            | Null | Key | Default | Extra          |
++------------------+---------------------------------+------+-----+---------+----------------+
+| id               | int(11)                         | NO   | PRI | NULL    | auto_increment |
+| addressBookId    | int(11)                         | NO   |     | NULL    |                |
+| firstName        | varchar(255)                    | NO   |     | NULL    |                |
+| lastName         | varchar(255)                    | YES  |     | NULL    |                |
+| birthday         | datetime                        | YES  |     | NULL    |                |
+| type             | enum('home','work','other')     | NO   |     | NULL    |                |
+| subtype          | enum('phone','address','email') | NO   |     | NULL    |                |
+| contentLineOne   | varchar(255)                    | NO   |     | NULL    |                |
+| contentLineTwo   | varchar(255)                    | YES  |     | NULL    |                |
+| contentLineThree | varchar(255)                    | YES  |     | NULL    |                |
+| contentLineFour  | varchar(255)                    | YES  |     | NULL    |                |
+| contentLineFive  | varchar(255)                    | YES  |     | NULL    |                |
++------------------+---------------------------------+------+-----+---------+----------------+
+12 rows in set (0.00 sec)
+
+mysql> show tables;
++----------------------------------------+
+| Tables_in_decodemtl_addressbook_import |
++----------------------------------------+
+| Account                                |
+| AddressBook                            |
+| Entry                                  |
++----------------------------------------+
+3 rows in set (0.00 sec)
+
+mysql> DROP TABLE Account;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show tables;
++----------------------------------------+
+| Tables_in_decodemtl_addressbook_import |
++----------------------------------------+
+| AddressBook                            |
+| Entry                                  |
++----------------------------------------+
+2 rows in set (0.00 sec)
+
+source data/import-addressbook.sql
+
+
+
+
+mysql> SELECT * FROM Account WHERE id = 63;                                                  
++----+-------------------------------------------------+-------------+---------------------+---------------------+
+| id | email                                           | password    | createdOn           | modifiedOn          |
++----+-------------------------------------------------+-------------+---------------------+---------------------+
+| 63 | consectetuer.rhoncus.Nullam@temporloremeget.org | IXW18QLZ3AH | 2015-03-03 16:28:10 | 2016-06-17 23:01:47 |
++----+-------------------------------------------------+-------------+---------------------+---------------------+
+1 row in set (0.00 sec)
+
 mysql> 
+
+mysql> SELECT * FROM AddressBook WHERE accountId = 3;                                             
++------+-----------+---------------------------------+---------------------+---------------------+
+| id   | accountId | name                            | createdOn           | modifiedOn          |
++------+-----------+---------------------------------+---------------------+---------------------+
+|    3 |         3 | Donec Incorporated              | 2016-05-04 23:06:18 | 2016-06-16 06:54:15 |
+|   62 |         3 | Ipsum Nunc LLC                  | 2015-09-08 00:26:17 | 2016-01-11 13:40:49 |
+|  117 |         3 | In Consectetuer Ltd             | 2016-06-03 11:56:16 | 2015-07-14 11:37:52 |
+|  510 |         3 | Lacus Aliquam Rutrum Industries | 2015-03-18 10:29:24 | 2016-07-27 14:37:47 |
+|  535 |         3 | Ac Ltd                          | 2016-06-06 12:50:37 | 2014-10-09 11:23:40 |
+|  614 |         3 | Mauris Consulting               | 2016-07-19 16:37:29 | 2015-04-16 12:32:05 |
+|  657 |         3 | Ornare Corporation              | 2014-10-12 09:24:10 | 2015-02-26 17:12:48 |
+| 1103 |         3 | Donec Incorporated              | 2016-05-04 23:06:18 | 2016-06-16 06:54:15 |
+| 1162 |         3 | Ipsum Nunc LLC                  | 2015-09-08 00:26:17 | 2016-01-11 13:40:49 |
+| 1217 |         3 | In Consectetuer Ltd             | 2016-06-03 11:56:16 | 2015-07-14 11:37:52 |
+| 1610 |         3 | Lacus Aliquam Rutrum Industries | 2015-03-18 10:29:24 | 2016-07-27 14:37:47 |
+| 1635 |         3 | Ac Ltd                          | 2016-06-06 12:50:37 | 2014-10-09 11:23:40 |
+| 1714 |         3 | Mauris Consulting               | 2016-07-19 16:37:29 | 2015-04-16 12:32:05 |
+| 1757 |         3 | Ornare Corporation              | 2014-10-12 09:24:10 | 2015-02-26 17:12:48 |
++------+-----------+---------------------------------+---------------------+---------------------+
+14 rows in set (0.00 sec)
+
+
+
+mysql> SELECT * FROM AddressBook WHERE name = "Lorem Foundation";                                 
++------+-----------+------------------+---------------------+---------------------+
+| id   | accountId | name             | createdOn           | modifiedOn          |
++------+-----------+------------------+---------------------+---------------------+
+|    5 |        84 | Lorem Foundation | 2016-06-26 02:43:41 | 2015-04-06 10:24:41 |
+|  153 |        12 | Lorem Foundation | 2015-05-04 14:28:16 | 2015-05-24 20:46:26 |
+| 1105 |        84 | Lorem Foundation | 2016-06-26 02:43:41 | 2015-04-06 10:24:41 |
+| 1253 |        12 | Lorem Foundation | 2015-05-04 14:28:16 | 2015-05-24 20:46:26 |
++------+-----------+------------------+---------------------+---------------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT createdOn FROM AddressBook WHERE name = "Lorem Foundation";                         
++---------------------+
+| createdOn           |
++---------------------+
+| 2016-06-26 02:43:41 |
+| 2015-05-04 14:28:16 |
+| 2016-06-26 02:43:41 |
+| 2015-05-04 14:28:16 |
++---------------------+
+4 rows in set (0.00 sec)
+
+mysql> 
+
+mysql> SELECT COUNT(*) Entry; 
+
+mysql> SELECT COUNT(*) FROM Account;
++----------+
+| COUNT(*) |
++----------+
+|     1000 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> SELECT COUNT(*) FROM Account;
++----------+
+| COUNT(*) |
++----------+
+|     1000 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> SELECT COUNT(*) FROM AddressBook;
++----------+
+| COUNT(*) |
++----------+
+|     2200 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> SELECT COUNT(*) FROM Entry;
++----------+
+| COUNT(*) |
++----------+
+|        0 |
++----------+
+1 row in set (0.00 sec)
+
+
+
+mysql> SELECT COUNT(*) FROM Entry;
++----------+
+| COUNT(*) |
++----------+
+|     4000 |
++----------+
+1 row in set 
+
+
+mysql> SELECT COUNT(*) FROM Entry;
++----------+
+| COUNT(*) |
++----------+
+|     4000 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(*) FROM Entry WHERE birthday< "1982-02-12";
++----------+
+| COUNT(*) |
++----------+
+|     2687 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> 
+mysql> SELECT COUNT(*) FROM Entry WHERE birthday>= "1965-01-01";
++----------+
+| COUNT(*) |
++----------+
+|     2597 |
++----------+
+1 row in set (0.00 sec)
+
+
+mysql> SELECT COUNT(*) FROM Entry WHERE birthday< "1982-02-12";
++----------+
+| COUNT(*) |
++----------+
+|     2687 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(*) FROM Entry WHERE birthday>= "1965-01-01";
++----------+
+| COUNT(*) |
++----------+
+|     2597 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(*) FROM Entry ORDER BY birthday LIMIT 1;
++----------+
+| COUNT(*) |
++----------+
+|     4000 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT addressBookId, firstName, lastName FROM Entry ORDER BY birthday LIMIT 1;
++---------------+-----------+----------+
+| addressBookId | firstName | lastName |
++---------------+-----------+----------+
+|            93 | Abigail   | Rollins  |
++---------------+-----------+----------+
+1 row in set (0.01 sec)
+
+mysql> SELECT addressBookId, firstName, lastName, birthday FROM Entry ORDER BY birthday LIMIT 1;
++---------------+-----------+----------+---------------------+
+| addressBookId | firstName | lastName | birthday            |
++---------------+-----------+----------+---------------------+
+|            93 | Abigail   | Rollins  | 1945-09-02 09:21:58 |
++---------------+-----------+----------+---------------------+
+1 row in set (0.01 sec)
+
+mysql> 
+
+mysql> SELECT COUNT(*) FROM Entry WHERE type="home" OR type="work";
++----------+
+| COUNT(*) |
++----------+
+|     2800 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> SELECT COUNT(*) FROM Entry WHERE type!="other";
++----------+
+| COUNT(*) |
++----------+
+|     2800 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> SELECT COUNT(*) FROM Entry WHERE subtype="phone";
++----------+
+| COUNT(*) |
++----------+
+|      600 |
++----------+
+1 row in set (0.00 sec)
