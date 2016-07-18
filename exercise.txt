@@ -1,0 +1,214 @@
+shreyakaicker:~/workspace (master) $ mysql-ctl start
+ * Starting MySQL database server mysqld                                            [ OK ] 
+shreyakaicker:~/workspace (master) $ mysql --user shreyakaicker
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 56
+Server version: 5.5.49-0ubuntu0.14.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++------------------------------+
+| Database                     |
++------------------------------+
+| information_schema           |
+| answer                       |
+| c9                           |
+| decodemtl_addressbook_import |
+| mysql                        |
+| performance_schema           |
+| phpmyadmin                   |
++------------------------------+
+7 rows in set (0.00 sec)
+
+mysql> use answer;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> source data/import-table-structure.sql;
+Query OK, 3 rows affected (0.02 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Database changed
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show tables;
++----------------------------------------+
+| Tables_in_decodemtl_addressbook_import |
++----------------------------------------+
+| Account                                |
+| AddressBook                            |
+| Entry                                  |
++----------------------------------------+
+3 rows in set (0.00 sec)
+
+mysql> describe Account;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+| email      | varchar(255) | NO   |     | NULL    |                |
+| password   | varchar(40)  | NO   |     | NULL    |                |
+| createdOn  | datetime     | NO   |     | NULL    |                |
+| modifiedOn | datetime     | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> INSERT INTO Account (email, password, createdOn, modifiedOn) VALUES
+    ->     ("shr@ggg.com" , "achsdsidjis" , "2016-07-18", "2016-07-18" ) ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM Account;
++----+-------------+-------------+---------------------+---------------------+
+| id | email       | password    | createdOn           | modifiedOn          |
++----+-------------+-------------+---------------------+---------------------+
+|  1 | shr@ggg.com | achsdsidjis | 2016-07-18 00:00:00 | 2016-07-18 00:00:00 |
++----+-------------+-------------+---------------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> describe AddressBook;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+| accountId  | int(11)      | NO   |     | NULL    |                |
+| name       | varchar(255) | NO   |     | NULL    |                |
+| createdOn  | datetime     | NO   |     | NULL    |                |
+| modifiedOn | datetime     | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO Addressbook (accountId, name, createdOn, modifiedOn) VALUES
+    ->         ("123" , "shreya" , "2016-07-18", "2016-07-18" ) ;
+ERROR 1146 (42S02): Table 'decodemtl_addressbook_import.Addressbook' doesn't exist
+mysql> INSERT INTO AddressBook (accountId, name, createdOn, modifiedOn) VALUES
+    -> describe AddressBook;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'describe AddressBook' at line 2
+mysql> describe AddressBook;+------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+| accountId  | int(11)      | NO   |     | NULL    |                |
+| name       | varchar(255) | NO   |     | NULL    |                |
+| createdOn  | datetime     | NO   |     | NULL    |                |
+| modifiedOn | datetime     | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM AddressBook;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO AddressBook (accountId, name, createdOn, modifiedOn) VALUES
+    ->         ("123" , "shreya" , "2016-07-18", "2016-07-18" ) ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> describe AddressBook;+------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+| accountId  | int(11)      | NO   |     | NULL    |                |
+| name       | varchar(255) | NO   |     | NULL    |                |
+| createdOn  | datetime     | NO   |     | NULL    |                |
+| modifiedOn | datetime     | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM AddressBook;+----+-----------+--------+---------------------+---------------------+
+| id | accountId | name   | createdOn           | modifiedOn          |
++----+-----------+--------+---------------------+---------------------+
+|  1 |       123 | shreya | 2016-07-18 00:00:00 | 2016-07-18 00:00:00 |
++----+-----------+--------+---------------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> describe Entry;
++------------------+---------------------------------+------+-----+---------+----------------+
+| Field            | Type                            | Null | Key | Default | Extra          |
++------------------+---------------------------------+------+-----+---------+----------------+
+| id               | int(11)                         | NO   | PRI | NULL    | auto_increment |
+| addressBookId    | int(11)                         | NO   |     | NULL    |                |
+| firstName        | varchar(255)                    | NO   |     | NULL    |                |
+| lastName         | varchar(255)                    | YES  |     | NULL    |                |
+| birthday         | datetime                        | YES  |     | NULL    |                |
+| type             | enum('home','work','other')     | NO   |     | NULL    |                |
+| subtype          | enum('phone','address','email') | NO   |     | NULL    |                |
+| contentLineOne   | varchar(255)                    | NO   |     | NULL    |                |
+| contentLineTwo   | varchar(255)                    | YES  |     | NULL    |                |
+| contentLineThree | varchar(255)                    | YES  |     | NULL    |                |
+| contentLineFour  | varchar(255)                    | YES  |     | NULL    |                |
+| contentLineFive  | varchar(255)                    | YES  |     | NULL    |                |
++------------------+---------------------------------+------+-----+---------+----------------+
+12 rows in set (0.00 sec)
+
+mysql> INSERT INTO Entry (addressBookId, firstName, lastName, birthday, type, subtype,
+    -> contentLineOne, contentLineTwo, contentLineThree, contentLineFour, contentLineFive  ) VALUES
+    ->         (234 , "shreya" , "kaicker", "1991-06-01", "home", "email", "kk", "jj", "kkk", "lll", "kjkj") ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> describe Entry;+------------------+---------------------------------+------+-----+---------+----------------+
+| Field            | Type                            | Null | Key | Default | Extra          |
++------------------+---------------------------------+------+-----+---------+----------------+
+| id               | int(11)                         | NO   | PRI | NULL    | auto_increment |
+| addressBookId    | int(11)                         | NO   |     | NULL    |                |
+| firstName        | varchar(255)                    | NO   |     | NULL    |                |
+| lastName         | varchar(255)                    | YES  |     | NULL    |                |
+| birthday         | datetime                        | YES  |     | NULL    |                |
+| type             | enum('home','work','other')     | NO   |     | NULL    |                |
+| subtype          | enum('phone','address','email') | NO   |     | NULL    |                |
+| contentLineOne   | varchar(255)                    | NO   |     | NULL    |                |
+| contentLineTwo   | varchar(255)                    | YES  |     | NULL    |                |
+| contentLineThree | varchar(255)                    | YES  |     | NULL    |                |
+| contentLineFour  | varchar(255)                    | YES  |     | NULL    |                |
+| contentLineFive  | varchar(255)                    | YES  |     | NULL    |                |
++------------------+---------------------------------+------+-----+---------+----------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Entry;                                                                
++----+---------------+-----------+----------+---------------------+------+---------+----------------+----------------+------------------+-----------------+-----------------+
+| id | addressBookId | firstName | lastName | birthday            | type | subtype | contentLineOne | contentLineTwo | contentLineThree | contentLineFour | contentLineFive |
++----+---------------+-----------+----------+---------------------+------+---------+----------------+----------------+------------------+-----------------+-----------------+
+|  1 |           234 | shreya    | kaicker  | 1991-06-01 00:00:00 | home | email   | kk             | jj             | kkk              | lll             | kjkj            |
++----+---------------+-----------+----------+---------------------+------+---------+----------------+----------------+------------------+-----------------+-----------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Entry (addressBookId, firstName, lastName, birthday, type, subtype, contentLineOne, contentLineTwo, contentLineThree, contentLineFour, contentLineFive  ) VALUES         (234 , "pranav" , "prakash", "1491-06-01", "work", "phone", "mkk", "jrj", "jjkkk", "hhlll", "kjkhhj");    
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM Entry;+----+---------------+-----------+----------+---------------------+------+---------+----------------+----------------+------------------+-----------------+-----------------+
+| id | addressBookId | firstName | lastName | birthday            | type | subtype | contentLineOne | contentLineTwo | contentLineThree | contentLineFour | contentLineFive |
++----+---------------+-----------+----------+---------------------+------+---------+----------------+----------------+------------------+-----------------+-----------------+
+|  1 |           234 | shreya    | kaicker  | 1991-06-01 00:00:00 | home | email   | kk             | jj             | kkk              | lll             | kjkj            |
+|  2 |           234 | pranav    | prakash  | 1491-06-01 00:00:00 | work | phone   | mkk            | jrj            | jjkkk            | hhlll           | kjkhhj          |
++----+---------------+-----------+----------+---------------------+------+---------+----------------+----------------+------------------+-----------------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Entry (addressBookId, firstName, lastName, birthday, type, subtype, contentLineOne, contentLineTwo, contentLineThree, contentLineFour, contentLineFive  ) VALUES         (234 , "ishan" , "pakash", "1791-06-01", "work", "phone", "mk", "jj", "jjk", "hlll", "khhj");            
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM Entry;+----+---------------+-----------+----------+---------------------+------+---------+----------------+----------------+------------------+-----------------+-----------------+
+| id | addressBookId | firstName | lastName | birthday            | type | subtype | contentLineOne | contentLineTwo | contentLineThree | contentLineFour | contentLineFive |
++----+---------------+-----------+----------+---------------------+------+---------+----------------+----------------+------------------+-----------------+-----------------+
+|  1 |           234 | shreya    | kaicker  | 1991-06-01 00:00:00 | home | email   | kk             | jj             | kkk              | lll             | kjkj            |
+|  2 |           234 | pranav    | prakash  | 1491-06-01 00:00:00 | work | phone   | mkk            | jrj            | jjkkk            | hhlll           | kjkhhj          |
+|  3 |           234 | ishan     | pakash   | 1791-06-01 00:00:00 | work | phone   | mk             | jj             | jjk              | hlll            | khhj            |
++----+---------------+-----------+----------+---------------------+------+---------+----------------+----------------+------------------+-----------------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql> 
